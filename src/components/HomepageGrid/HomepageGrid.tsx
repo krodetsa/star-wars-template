@@ -34,7 +34,7 @@ function HomepageGrid() {
       >
         {cards.map(({ name, url }: CardType) => {
           return (
-            <Card.Grid style={{ padding: 0 }} key={url}>
+            <Card.Grid role="person-link" style={{ padding: 0 }} key={url}>
               <Link href={`/details/${extractNumberFromURL(url)}`}>
                 {isLoading ? (
                   <Skeleton.Button
