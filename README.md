@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
+
+Preview: https://star-wars-template.vercel.app/
 
 First, install the dependencies:
 
@@ -16,7 +16,14 @@ Run the development server:
 yarn dev
 # or
 npm run dev
+```
 
+Run tests:
+
+```bash
+yarn test
+# or
+npm run test
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
