@@ -1,4 +1,5 @@
 import { SearchModeTypes } from "@/types/appTypes";
+import { Person } from "@/types/person";
 import axios from "axios";
 const api = axios.create({
   baseURL: "https://swapi.dev/api/people/",
@@ -20,7 +21,7 @@ api.interceptors.response.use(
 );
 
 export const fetchDetails = async (id: number) => {
-  const data = await api.get(`${id}`);
+  const data = await api.get<Person>(`${id}`);
   return {
     data,
   };

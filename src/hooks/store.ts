@@ -27,7 +27,7 @@ const person = makeObservable({});
 
 export const usePersonStore = () => {
   const [personStore, setState] = useState(person.get());
-  const setPersonStore = (state: Person) => person.set(state);
+  const setPersonStore = (state: Person | any) => person.set(state);
   useEffect(() => {
     return person.subscribe(setState);
   }, []);

@@ -1,43 +1,27 @@
-import { useEffect } from "react";
 import { NextPageWithLayout } from "../page";
-import { usePersonStore } from "@/hooks/store";
 import DetailsContainer from "@/components/DetailsContainer/DetailsContainer";
 import Layout from "@/components/common/Layout/Layout";
-import { fetchDetails } from "@/helpers/api";
-import { Person } from "@/types/person";
+import { useIsLoading } from "@/hooks/store";
+import { useFetchDetails } from "@/hooks/useFetchDetails";
+import { Spin } from "antd";
 
-interface DetailsProps {
-  data: Person;
-}
+type DetailsProps = {
+  id: number;
+};
 
-const Details: NextPageWithLayout<DetailsProps> = ({ data }) => {
-  const { personStore, setPersonStore } = usePersonStore();
+const Details: NextPageWithLayout<DetailsProps> = ({ id }) => {
+  const { isLoading } = useIsLoading();
+  useFetchDetails(id);
 
-  useEffect(() => {
-    setPersonStore(data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <>
-      {personStore.name !== undefined ? (
-        <DetailsContainer />
-      ) : (
-        <p>User is not found</p>
-      )}
-    </>
-  );
+  return <>{isLoading ? <Spin /> : <DetailsContainer />}</>;
 };
 
 export const getServerSideProps = async (context: any) => {
   const { id } = context.query;
-
-  try {
-    const { data } = await fetchDetails(Number(id));
-    return { props: { data } };
-  } catch (error) {
-    return { props: { data: { name: undefined } } };
-  }
+  // I wanted to get the data here and pass it as props to the DetailsContainer component
+  // but the query takes too long to load and the page is blocked
+  // so I had to use the useFetchDetails hook
+  return { props: { id: Number(id) } };
 };
 
 Details.getLayout = (page) => <Layout>{page}</Layout>;
