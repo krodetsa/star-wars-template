@@ -8,11 +8,17 @@ const dataTemplate = {
   previous: null,
   results: [],
 };
+export type DataTemplateTypes = {
+  count: number,
+  next: string,
+  previous: null | string,
+  results: [],
+} 
 const data = makeObservable(dataTemplate);
 
 export const useDataStore = () => {
   const [dataStore, setState] = useState(data.get());
-  const setDataStore = (state: any) => data.set(state);
+  const setDataStore = (state: DataTemplateTypes) => data.set(state);
   useEffect(() => {
     return data.subscribe(setState);
   }, []);
@@ -27,7 +33,7 @@ const person = makeObservable({});
 
 export const usePersonStore = () => {
   const [personStore, setState] = useState(person.get());
-  const setPersonStore = (state: Person | any) => person.set(state);
+  const setPersonStore = (state: Person) => person.set(state);
   useEffect(() => {
     return person.subscribe(setState);
   }, []);
@@ -42,10 +48,13 @@ const searchModeStore = makeObservable({
   active: false,
   search: "",
 });
-
+type SearchMode = {
+  active: boolean;
+  search: string;
+};
 export const useSearchMode = () => {
   const [searchMode, setState] = useState<SearchModeTypes>(searchModeStore.get());
-  const setSearchMode = (state: any) => searchModeStore.set(state);
+  const setSearchMode = (state: SearchMode) => searchModeStore.set(state);
   useEffect(() => {
     return searchModeStore.subscribe(setState);
   }, []);

@@ -8,6 +8,11 @@ import { Spin } from "antd";
 type DetailsProps = {
   id: number;
 };
+interface ServerSidePropsType {
+  query: {
+    id: string;
+  };
+}
 
 const Details: NextPageWithLayout<DetailsProps> = ({ id }) => {
   const { isLoading } = useIsLoading();
@@ -16,7 +21,7 @@ const Details: NextPageWithLayout<DetailsProps> = ({ id }) => {
   return <>{isLoading ? <Spin /> : <DetailsContainer />}</>;
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: ServerSidePropsType) => {
   const { id } = context.query;
   // I wanted to get the data here and pass it as props to the DetailsContainer component
   // but the query takes too long to load and the page is blocked

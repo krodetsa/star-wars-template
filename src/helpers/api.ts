@@ -1,3 +1,4 @@
+import { DataTemplateTypes } from "@/hooks/store";
 import { SearchModeTypes } from "@/types/appTypes";
 import { Person } from "@/types/person";
 import axios from "axios";
@@ -21,7 +22,7 @@ api.interceptors.response.use(
 );
 
 export const fetchDetails = async (id: number) => {
-  const data = await api.get<Person>(`${id}`);
+  const data = await api.get<Person, Person>(`${id}`);
   return {
     data,
   };
@@ -31,17 +32,14 @@ export const fetchPaginatedList = async (
   id: number,
   searchMode: SearchModeTypes
 ) => {
-  return api.get(
-    `?${
-      searchMode.active ? `search=${searchMode.search}&` : ""
-    }page=${id}`
+  return api.get<DataTemplateTypes, DataTemplateTypes>(
+    `?${searchMode.active ? `search=${searchMode.search}&` : ""}page=${id}`
   );
 };
 
-export const fetchSearch = async (
-  id: string | null,
-) => {
-  return api.get(`?search=${id}`)
+export const fetchSearch = async (id: string | null) => {
+  return api
+    .get<DataTemplateTypes, DataTemplateTypes>(`?search=${id}`)
     .then((res) => {
       return res;
     });
