@@ -54,7 +54,7 @@ const DetailsContainer = () => {
 
   return (
     <StyledDetailsContainer>
-      {localData.name && (
+      {localData.url && (
         <>
           <Descriptions
             bordered
